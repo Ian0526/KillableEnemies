@@ -15,6 +15,14 @@ The `KillableEnemies` mod provides an API that allows other mods to interact wit
 
 First, ensure that your project references the `KillableEnemies` mod. You will need to have the mod's DLL file available in your development environment.
 
+## Adding as a Dependency
+
+Add this above your Main class.
+
+```csharp
+[BepInDependency("Ovchinikov.KillableEnemies.Main", BepInDependency.DependencyFlags.HardDependency)]
+```
+
 ## Listening to Enemy Events
 
 The `KillableEnemy` class emits events that your mod can listen to. These events are `DeathEvent` and `HitEvent`.
