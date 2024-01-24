@@ -30,9 +30,9 @@ Example:
 static void PostfixStartEnemy(EnemyAI __instance)
 {
     KillableEnemy enemy = __instance.GetComponent<KillableEnemy>();
+    // Since some don't have this component
     if (enemy != null)
     {
-        // Since some don't have this component
         enemy.DeathEvent += DoSomething;
     }
 }
@@ -55,9 +55,9 @@ Example:
 static void PostfixStartEnemy(EnemyAI __instance)
 {
     KillableEnemy enemy = __instance.GetComponent<KillableEnemy>();
+    // Since some don't have this component
     if (enemy != null)
     {
-        // Since some don't have this component
         enemy.HitEvent += DoSomething;
     }
 }
@@ -76,9 +76,9 @@ private static void DoSomething(KillableEnemy sender, HitEventArgs e)
 static void PostfixStartEnemy(EnemyAI __instance)
 {
     KillableEnemy enemy = __instance.GetComponent<KillableEnemy>();
+    // Since some don't have this component
     if (enemy != null)
     {
-        // Since some don't have this component
         enemy.HitEvent += Cancel;
     }
 }
