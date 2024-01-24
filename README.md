@@ -32,7 +32,8 @@ private void OnEnemyDeath(KillableEnemy sender, DeathEventArgs e)
 {
     // Your code here. Example:
     Console.WriteLine($"{sender.enemyType} has died.");
-}```
+}
+```
 
 ### Subscribing to HitEvent
 
@@ -46,7 +47,8 @@ private void OnEnemyHit(KillableEnemy sender, HitEventArgs e)
 {
     // Your code here. Example:
     Console.WriteLine($"{sender.enemyType} has been hit.");
-}```
+}
+```
 
 ### Subscribing to DeathEvent
 
@@ -60,7 +62,8 @@ private void OnEnemyDeath(KillableEnemy sender, HitEventArgs e)
 {
     // Your code here. Example:
     Console.WriteLine($"{sender.enemyType} has been kill.");
-}```
+}
+```
 
 
 ### Cancelling Events
@@ -71,4 +74,5 @@ private void OnEnemyDeath(KillableEnemy sender, HitEventArgs e)
 {
     if (someConditionThatCancels)
 	e.Cancel = true;
-}```
+}
+```
