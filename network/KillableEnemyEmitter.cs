@@ -7,16 +7,16 @@ namespace KillableEnemies.network
 {
     public class KillableEnemyEmitter : NetworkBehaviour
     {
-        [ServerRpc]
+        [ServerRpc(RequireOwnership = false)]
         public void DoDamageServerRpc(ulong objectId, int damage)
         {
             DoDamageClientRpc(objectId, damage);
         }
 
-        [ServerRpc]
-        public void DoKillServerRpc(ulong objectId, int damage)
+        [ServerRpc(RequireOwnership = false)]
+        public void DoKillServerRpc(ulong objectId)
         {
-            DoKillClientRpc(objectId, damage);
+            DoKillClientRpc(objectId);
         }
 
         [ClientRpc]
@@ -31,7 +31,7 @@ namespace KillableEnemies.network
         }
 
         [ClientRpc]
-        public void DoKillClientRpc(ulong objectId, int damage)
+        public void DoKillClientRpc(ulong objectId)
         {
             EnemyAI enemyAI = KillableEnemyManager.Instance.NetworkObjectIDToEnemyAI.GetValueSafe(objectId);
             KillableEnemy killableEnemy = enemyAI.gameObject.GetComponent<KillableEnemy>();

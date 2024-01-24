@@ -1,4 +1,6 @@
-﻿using KillableEnemies.managers;
+﻿using GameNetcodeStuff;
+using KillableEnemies.managers;
+using KillableEnemies.network;
 using System;
 using UnityEngine;
 
@@ -26,9 +28,9 @@ namespace KillableEnemies.models
         public delegate void HitEventHandler(KillableEnemy sender, HitEventArgs e);
         public event HitEventHandler HitEvent;
 
-        public void DoDamage(int amount)
+        public void DoDamage(int amount, PlayerControllerB whoHit = null)
         {
-            var args = new HitEventArgs();
+            var args = new HitEventArgs(this, amount);
             OnHitEvent(args);
 
             if (args.Cancel)
@@ -44,25 +46,31 @@ namespace KillableEnemies.models
 
             if (currentHealth == 0)
             {
-                DoDeath();
+                if (enemyAI.IsHost || enemyAI.IsServer)
+                {
+                    StartOfRound.Instance.allPlayerScripts[0].gameObject.GetComponent<KillableEnemyEmitter>().DoKillServerRpc(enemyAI.NetworkObjectId);
+                }
             }
         }
 
         public void DoDeath()
         {
-            var args = new DeathEventArgs();
-            OnDeathEvent(args);
+            if (enemyAI.IsHost || enemyAI.IsServer)
+            { 
+                var args = new DeathEventArgs(this, currentHealth);
+                OnDeathEvent(args);
 
-            if (args.Cancel)
-            {
-                return;
+                if (args.Cancel)
+                {
+                    return;
+                }
+
+                EnemyAI.isEnemyDead = true;
+                if (enemyAI.IsServer || enemyAI.IsHost)
+                {
+                    EnemyAI.NetworkObject.Despawn();
+                }
             }
-
-            EnemyAI.NetworkObject.Despawn();
-            EnemyAI.isEnemyDead = true;
-
-            KillableEnemyManager.Instance.EnemyAIToNetworkObjectID.Remove(enemyAI);
-            KillableEnemyManager.Instance.NetworkObjectIDToEnemyAI.Remove(enemyAI.NetworkObjectId);
         }
 
         protected virtual void OnDeathEvent(DeathEventArgs e)
@@ -76,14 +84,29 @@ namespace KillableEnemies.models
         }
     }
 
+
     public class DeathEventArgs : EventArgs
     {
+        public KillableEnemy Enemy { get; private set; }
         public bool Cancel { get; set; } = false;
+
+        public DeathEventArgs(KillableEnemy enemy, int remainingHealth)
+        {
+            Enemy = enemy;
+        }
     }
 
     public class HitEventArgs : EventArgs
     {
+        public KillableEnemy Enemy { get; private set; }
+        public int DamageDealt { get; private set; }
         public bool Cancel { get; set; } = false;
+
+        public HitEventArgs(KillableEnemy enemy, int damageDealt)
+        {
+            Enemy = enemy;
+            DamageDealt = damageDealt;
+        }
     }
 
     public enum EnemyType
