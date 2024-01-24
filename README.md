@@ -79,7 +79,7 @@ static void PostfixStartEnemy(EnemyAI __instance)
     if (enemy != null)
     {
         // Since some don't have this component
-        enemy.HitEvent += DoSomething;
+        enemy.HitEvent += Cancel;
     }
 }
 
