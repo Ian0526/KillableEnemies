@@ -7,7 +7,7 @@ I haven't made a single animation, the enemies will just despawn but there are e
 
 ## Changelog
 
-### 0.1.1
+### 0.1.2
 - [Bug Fix] Don't register killable data if not defined in config (you could kill disabled enemies)
 
 ### 0.1.1
