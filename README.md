@@ -1,98 +1,28 @@
-# Changelog
+# KillableEnemies
 
-## 0.1.1
-- [Feature] Reference to KillableEnemy in events.
+KillableEnemies is an API and Mod allowing the deaths of invulnerable enemies.
 
-## 0.1.0
+## Notes
+I haven't made a single animation, the enemies will just despawn but there are events you can hook into yourself to add in sounds and whatnot. At the very least, I will have the enemies ragdoll eventually.
+
+## Changelog
+
+### 0.1.1
+- [Bug Fix] Don't register killable data if not defined in config (you could kill disabled enemies)
+
+### 0.1.1
+- [QOL] Add reference to KillableEnemy object in events.
+
+### 0.1.0
 - [Feature] Config options to modify damage and invulnerability of all invulnerable enemies.
 - [Feature] Easy to hook into API, cancelable damage and kill events
 
-# KillableEnemies API Usage
+## Dependencies
+- LethalConfig
 
-The `KillableEnemies` mod provides an API that allows other mods to interact with and extend the functionality of various enemy types in the game. Below are the instructions on how to use this API in your mod.
+## Usage
+Open the settings menu with ESC and edit it through the Mod Config button.
+For API usage, visit the Git link.
 
-## Getting Started
-
-First, ensure that your project references the `KillableEnemies` mod. You will need to have the mod's DLL file available in your development environment.
-
-## Adding as a Dependency
-
-Add this above your Main class.
-
-```csharp
-[BepInDependency("Ovchinikov.KillableEnemies.Main", BepInDependency.DependencyFlags.HardDependency)]
-```
-
-## Listening to Enemy Events
-
-The `KillableEnemy` class emits events that your mod can listen to. These events are `DeathEvent` and `HitEvent`.
-
-### Subscribing to DeathEvent
-
-To react when an enemy dies, subscribe to the `DeathEvent`. This event is triggered when an enemy's health reaches zero.
-
-Example:
-```csharp
-[HarmonyPostfix]
-[HarmonyPatch(typeof(EnemyAI), "Start")]
-static void PostfixStartEnemy(EnemyAI __instance)
-{
-    KillableEnemy enemy = __instance.GetComponent<KillableEnemy>();
-    // Since some don't have this component
-    if (enemy != null)
-    {
-        enemy.DeathEvent += DoSomething;
-    }
-}
-
-private static void DoSomething(KillableEnemy sender, DeathEventArgs e)
-{
-    // Your code here. Example:
-    Console.WriteLine($"{e.Enemy.EnemyType} has died.");
-}
-```
-
-### Subscribing to HitEvent
-
-To perform actions when an enemy is hit, subscribe to the `HitEvent`.
-
-Example:
-```csharp
-[HarmonyPostfix]
-[HarmonyPatch(typeof(EnemyAI), "Start")]
-static void PostfixStartEnemy(EnemyAI __instance)
-{
-    KillableEnemy enemy = __instance.GetComponent<KillableEnemy>();
-    // Since some don't have this component
-    if (enemy != null)
-    {
-        enemy.HitEvent += DoSomething;
-    }
-}
-
-private static void DoSomething(KillableEnemy sender, HitEventArgs e)
-{
-    // Your code here. Example:
-    Console.WriteLine($"{e.Enemy.EnemyType} has been hit.");
-}
-```
-
-### Cancelling Events
-```csharp
-[HarmonyPostfix]
-[HarmonyPatch(typeof(EnemyAI), "Start")]
-static void PostfixStartEnemy(EnemyAI __instance)
-{
-    KillableEnemy enemy = __instance.GetComponent<KillableEnemy>();
-    // Since some don't have this component
-    if (enemy != null)
-    {
-        enemy.HitEvent += Cancel;
-    }
-}
-
-private static void Cancel(KillableEnemy sender, HitEventArgs e)
-{
-    e.Cancel = true;
-}
-```
+## Contributing
+Feel free to contribute. If it improves the system, I'm more than happy to implement your changes.

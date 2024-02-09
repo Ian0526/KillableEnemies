@@ -4,6 +4,7 @@ using HarmonyLib;
 using KillableEnemies.managers;
 using KillableEnemies.models;
 using KillableEnemies.network;
+using System;
 
 namespace KillableEnemies.hooks
 {
@@ -22,12 +23,13 @@ namespace KillableEnemies.hooks
 
         [HarmonyPostfix]
         [HarmonyPatch(typeof(EnemyAI), "Start")]
-        static void PrefixTeleportPlayer(EnemyAI __instance)
+        static void PostfixStartEnemy(EnemyAI __instance)
         {
             switch (__instance)
             {
                 case ForestGiantAI forestgiantAI:
                     {
+                        if (!KillableEnemyManager.Instance.DoGiantKill) return;
                         InitializeKillableData(__instance);
                         KillableEnemy killableEnemy = forestgiantAI.gameObject.GetComponent<KillableEnemy>();
                         killableEnemy.StartingHealth = KillableEnemyManager.Instance.GiantHP;
@@ -40,6 +42,7 @@ namespace KillableEnemies.hooks
                     }
                 case DressGirlAI dressGirlAI:
                     {
+                        if (!KillableEnemyManager.Instance.DoGhostGirlKill) return;
                         InitializeKillableData(__instance);
                         KillableEnemy killableEnemy = dressGirlAI.gameObject.GetComponent<KillableEnemy>();
                         killableEnemy.StartingHealth = KillableEnemyManager.Instance.GhostGirlHP;
@@ -52,6 +55,7 @@ namespace KillableEnemies.hooks
                     }
                 case PufferAI pufferAI:
                     {
+                        if (!KillableEnemyManager.Instance.DoSporeLizardKill) return;
                         InitializeKillableData(__instance);
                         KillableEnemy killableEnemy = pufferAI.gameObject.GetComponent<KillableEnemy>();
                         killableEnemy.StartingHealth = KillableEnemyManager.Instance.SporeLizardHP;
@@ -64,6 +68,7 @@ namespace KillableEnemies.hooks
                     }
                 case SpringManAI springManAI:
                     {
+                        if (!KillableEnemyManager.Instance.DoCoilHeadKill) return;
                         InitializeKillableData(__instance);
                         KillableEnemy killableEnemy = springManAI.gameObject.GetComponent<KillableEnemy>();
                         killableEnemy.StartingHealth = KillableEnemyManager.Instance.CoilHeadHP;
@@ -76,6 +81,7 @@ namespace KillableEnemies.hooks
                     }
                 case JesterAI jesterAI:
                     {
+                        if (!KillableEnemyManager.Instance.DoJesterKill) return;
                         InitializeKillableData(__instance);
                         KillableEnemy killableEnemy = jesterAI.gameObject.GetComponent<KillableEnemy>();
                         killableEnemy.StartingHealth = KillableEnemyManager.Instance.CoilHeadHP;

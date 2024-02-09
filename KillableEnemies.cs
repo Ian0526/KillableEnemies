@@ -20,7 +20,7 @@ namespace KillableEnemies
     {
         private const string modGUID = "Ovchinikov.KillableEnemies.Main";
         private const string modName = "KillableEnemies";
-        private const string modVersion = "0.1.1";
+        private const string modVersion = "0.1.2";
 
         private readonly Harmony harmony = new Harmony(modGUID);
 
