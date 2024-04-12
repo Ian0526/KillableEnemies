@@ -115,6 +115,16 @@ namespace KillableEnemies.models
         GHOST_GIRL,
         GIANT,
         SPORE_LIZARD,
-        JESTER
+        JESTER,
+        BABOON_BIRD,
+        BUTLER_ENEMY,
+        CENTIPEDE,
+        CRAWLER,
+        HOARDER_BUG,
+        LASSO_MAN,
+        MOUTH_DOG,
+        NUTCRACKER_ENEMY,
+        RAD_MECH,
+        SAND_SPIDER
     }
 }
