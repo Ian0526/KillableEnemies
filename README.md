@@ -3,7 +3,7 @@
 KillableEnemies is an API and Mod allowing the deaths of invulnerable enemies.
 
 ## Notes
-I haven't made a single animation, the enemies will just despawn but there are events you can hook into yourself to add in sounds and whatnot. At the very least, I will have the enemies ragdoll eventually.
+There are no animations.
 
 ## Changelog
 
